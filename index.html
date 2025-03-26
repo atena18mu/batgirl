@@ -1,11 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>فروشگاه اکسسوری آتنا</title>
+    <link
+      href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    سلام من آتنا هستمی
+    <header class="header">
+      <h1>فروشگاه اکسسوری آتنا</h1>
+      <nav>
+        <ul>
+          <li><a href="#home">خانه</a></li>
+          <li><a href="#products">محصولات</a></li>
+          <li><a href="#about">درباره ما</a></li>
+          <li><a href="#contact">تماس</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h2>به دنیای اکسسوری‌های زیبا خوش آمدید!</h2>
+      <p>زیبایی را با محصولات دست‌ساز ما تجربه کنید</p>
+      <button class="shop-btn">خرید کنید</button>
+    </section>
+
+    <section class="products" id="products">
+      <h2>محصولات ویژه</h2>
+      <div class="product-grid" id="product-grid"></div>
+    </section>
+
+    <footer>
+      <p>© 2025 فروشگاه آتنا - تمامی حقوق محفوظ است</p>
+    </footer>
+
+    <script>
+      // Fetch and display products from JSON
+      fetch("./products.json")
+        .then((response) => response.json())
+        .then((products) => {
+          const productGrid = document.getElementById("product-grid");
+          products.forEach((product) => {
+            const card = document.createElement("div");
+            card.className = "product-card";
+
+            // Create image carousel if multiple images
+            const imgContainer = document.createElement("div");
+            imgContainer.className = "product-img-container";
+
+            product.images.forEach((imgSrc, index) => {
+              const img = document.createElement("div");
+              img.className = "product-img" + (index === 0 ? " active" : "");
+              img.style.backgroundImage = `url(${imgSrc})`;
+              imgContainer.appendChild(img);
+            });
+
+            // Add navigation dots if multiple images
+            if (product.images.length > 1) {
+              const dots = document.createElement("div");
+              dots.className = "img-dots";
+              product.images.forEach((_, index) => {
+                const dot = document.createElement("span");
+                dot.className = "dot" + (index === 0 ? " active" : "");
+                dot.onclick = () => {
+                  imgContainer
+                    .querySelectorAll(".product-img")
+                    .forEach((img, i) => {
+                      img.className =
+                        "product-img" + (i === index ? " active" : "");
+                    });
+                  dots.querySelectorAll(".dot").forEach((d, i) => {
+                    d.className = "dot" + (i === index ? " active" : "");
+                  });
+                };
+                dots.appendChild(dot);
+              });
+              imgContainer.appendChild(dots);
+            }
+
+            const title = document.createElement("h3");
+            title.textContent = product.title;
+
+            const desc = document.createElement("p");
+            desc.textContent = product.description;
+
+            const price = document.createElement("p");
+            price.className = "price";
+            price.innerHTML = product.discount
+              ? `<span class="original-price">${product.price.toLocaleString()} تومان</span> <span class="discount-price">${(
+                  product.price *
+                  (1 - product.discount)
+                ).toLocaleString()} تومان</span>`
+              : `${product.price.toLocaleString()} تومان`;
+
+            const button = document.createElement("button");
+            button.textContent = "افزودن به سبد";
+            button.onclick = () =>
+              alert(`${product.title} به سبد خرید اضافه شد!`);
+
+            card.appendChild(imgContainer);
+            card.appendChild(title);
+            card.appendChild(desc);
+            card.appendChild(price);
+            card.appendChild(button);
+            productGrid.appendChild(card);
+          });
+        });
+
+      // Shop button scroll
+      document.querySelector(".shop-btn").addEventListener("click", () => {
+        document
+          .getElementById("products")
+          .scrollIntoView({ behavior: "smooth" });
+      });
+    </script>
   </body>
 </html>

@@ -1,0 +1,29 @@
+[
+  {
+    "title": "گوشواره گل‌دار",
+    "description": "گوشواره دست‌ساز با طرح گل",
+    "price": 150000,
+    "discount": 0.2,
+    "images": [
+      "https://via.placeholder.com/300x200/ffe6e6",
+      "https://via.placeholder.com/300x200/ffd6d6"
+    ]
+  },
+  {
+    "title": "گردنبند قلب",
+    "description": "گردنبند زیبا با آویز قلب",
+    "price": 200000,
+    "images": ["https://via.placeholder.com/300x200/fff0f5"]
+  },
+  {
+    "title": "دستبند مروارید",
+    "description": "دستبند ظریف با مروارید طبیعی",
+    "price": 180000,
+    "discount": 0.15,
+    "images": [
+      "https://via.placeholder.com/300x200/f5f5ff",
+      "https://via.placeholder.com/300x200/e6e6ff",
+      "https://via.placeholder.com/300x200/d6d6ff"
+    ]
+  }
+]
